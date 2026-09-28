@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PE Smart — Private Wealth, Reimagined</title>
+<meta name="description" content="PE Smart is a private wealth command center for self-directed investors. Track portfolios, budgets, goals, and scanned documents — all stored locally on-device.">
+<style>
+  :root {
+    --bg: #0A0B14;
+    --bg-2: #141521;
+    --card: #16171F;
+    --divider: #2A2B3A;
+    --text: #FFFFFF;
+    --text-2: #A3A4B7;
+    --text-3: #6B6C82;
+    --accent: #59B8FB;
+    --accent-2: #7DA8FF;
+    --success: #4CD67F;
+    --warning: #F2D55F;
+    --danger: #F47272;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .wrap { max-width: 920px; margin: 0 auto; padding: 56px 24px 80px; }
+
+  .hero { text-align: center; padding: 32px 0 48px; }
+  .badge {
+    display: inline-block;
+    padding: 6px 14px;
+    background: rgba(89, 184, 251, 0.12);
+    border: 1px solid rgba(89, 184, 251, 0.35);
+    color: var(--accent);
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-size: 44px;
+    line-height: 1.1;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #FFFFFF 0%, #A3A4B7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .tagline { font-size: 18px; color: var(--text-2); max-width: 640px; margin: 0 auto 28px; }
+  .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+  .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: transform 0.15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); text-decoration: none; }
+  .btn-primary { background: var(--accent); color: #0A0B14; }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--divider); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    margin-top: 56px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--divider);
+    border-radius: 18px;
+    padding: 24px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+  .card:hover { border-color: rgba(89, 184, 251, 0.35); transform: translateY(-2px); }
+  .icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(89, 184, 251, 0.12);
+    color: var(--accent);
+    font-size: 20px;
+    margin-bottom: 14px;
+  }
+  .card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .card p { color: var(--text-2); font-size: 14px; }
+
+  .section { margin-top: 72px; }
+  .section h2 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .section .lead { color: var(--text-2); font-size: 16px; margin-bottom: 24px; }
+
+  .feature-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 720px) { .feature-row { grid-template-columns: 1fr; } }
+
+  .feature-block {
+    background: var(--bg-2);
+    border: 1px solid var(--divider);
+    border-radius: 16px;
+    padding: 22px;
+  }
+  .feature-block h4 { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+  .feature-block p { color: var(--text-2); font-size: 14px; }
+
+  .pill-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .pill {
+    padding: 6px 12px;
+    background: var(--bg-2);
+    border: 1px solid var(--divider);
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--text-2);
+  }
+
+  .privacy-callout {
+    margin-top: 24px;
+    padding: 20px 22px;
+    background: linear-gradient(135deg, rgba(76, 214, 127, 0.08), rgba(89, 184, 251, 0.08));
+    border: 1px solid rgba(76, 214, 127, 0.25);
+    border-radius: 14px;
+  }
+  .privacy-callout h4 { color: var(--success); margin-bottom: 6px; font-size: 14px; }
+  .privacy-callout p { color: var(--text-2); font-size: 14px; }
+
+  footer {
+    margin-top: 80px;
+    padding-top: 28px;
+    border-top: 1px solid var(--divider);
+    color: var(--text-3);
+    font-size: 13px;
+    text-align: center;
+  }
+  footer a { color: var(--text-2); }
+  .footer-links { display: flex; gap: 18px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section class="hero">
+    <span class="badge">iOS · iPhone</span>
+    <h1>PE Smart</h1>
+    <p class="tagline">A private wealth command center for self-directed investors. Track portfolios, budgets, goals, and scanned documents — every byte stays on your device.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="mailto:kaziashik8833@gmail.com?subject=PE%20Smart%20Support">Contact Support</a>
+      <a class="btn btn-ghost" href="privacy.html">Read Privacy Policy</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="grid">
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>Portfolio Command Center</h3>
+        <p>Manage multiple sleeves with goal amounts, risk profiles, rebalance suggestions, and cost-basis-aware P&L.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📈</div>
+        <h3>Native Charts</h3>
+        <p>Line, bar, pie, and candlestick charts rendered in Swift with Core Animation — no third-party dependencies.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🛰</div>
+        <h3>Markets Browser</h3>
+        <p>Live-looking indices, biggest movers, watchlist, and full category browsing across stocks, ETFs, crypto, FX, and commodities.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📄</div>
+        <h3>Document Scanner</h3>
+        <p>Capture receipts, contracts, and statements with the camera or photo picker — organized alongside your portfolio.</p>
+      </div>
+      <div class="card">
+        <div class="icon">💰</div>
+        <h3>Budget Tracker</h3>
+        <p>Per-category progress bars and burn-rate analytics keep your monthly outflows under control.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🎯</div>
+        <h3>Goal Tracking</h3>
+        <p>Measure progress against life targets with projected completion dates and contribution history.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🧮</div>
+        <h3>Multi-Mode Calculators</h3>
+        <p>Compound growth, IRR, loan amortization, and FX — everything a self-directed investor needs.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔒</div>
+        <h3>Secure Notes Vault</h3>
+        <p>Locally encrypted notes for PINs, tax strategy, and estate planning — never leaves your device.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Designed for serious money</h2>
+    <p class="lead">Every screen is engineered to compress sophisticated analytics into a single glance — net worth, asset allocation, performance trend, and risk exposure.</p>
+
+    <div class="feature-row">
+      <div class="feature-block">
+        <h4>Drill into any position</h4>
+        <p>Inspect a 1M–ALL candlestick history with crosshair probing, sectoral breakdowns, and benchmark overlays that update with a tap.</p>
+      </div>
+      <div class="feature-block">
+        <h4>Bloomberg-style Markets flow</h4>
+        <p>Indices, movers, watchlist, and category browsing across five asset universes — all in one screen.</p>
+      </div>
+      <div class="feature-block">
+        <h4>Trade history with cost basis</h4>
+        <p>Buys, sells, and dividends with average-cost-aware P&L, so the numbers always match what you actually paid.</p>
+      </div>
+      <div class="feature-block">
+        <h4>Diversification & risk insights</h4>
+        <p>Concentration, asset-class allocation, daily volatility, and synthetic beta — at-a-glance risk signals.</p>
+      </div>
+    </div>
+
+    <div class="pill-list">
+      <span class="pill">Stocks</span>
+      <span class="pill">ETFs</span>
+      <span class="pill">Crypto</span>
+      <span class="pill">Bonds</span>
+      <span class="pill">Real Estate</span>
+      <span class="pill">Commodities</span>
+      <span class="pill">Private Equity</span>
+      <span class="pill">FX</span>
+    </div>
+
+    <div class="privacy-callout">
+      <h4>Privacy by design</h4>
+      <p>Zero accounts. Zero cloud sync. Zero analytics. Zero notification permissions. All data — holdings, budgets, goals, scanned documents, notes — stays on-device behind iOS sandboxing.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Built with Swift &amp; UIKit</h2>
+    <p class="lead">A production-grade native experience — no web views, no wrappers, no third-party charting libraries.</p>
+    <div class="feature-row">
+      <div class="feature-block">
+        <h4>iOS 16+ ready</h4>
+        <p>Optimized for modern iPhones with light &amp; dark themes, dynamic typography, and refined haptics.</p>
+      </div>
+      <div class="feature-block">
+        <h4>No accounts required</h4>
+        <p>Open the app and start tracking. No signups, no email verification, no telemetry SDKs.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="support.html">Support</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="mailto:kaziashik8833@gmail.com">kaziashik8833@gmail.com</a>
+    </div>
+    <div>&copy; 2026 PE Smart. All rights reserved.</div>
+  </footer>
+
+</div>
+</body>
+</html>
